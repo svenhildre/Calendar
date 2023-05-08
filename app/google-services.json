@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "760791277034",
+    "firebase_url": "https://calender-aed55-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "calender-aed55",
+    "storage_bucket": "calender-aed55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760791277034:android:cd6e351d4fb080b6faa693",
+        "android_client_info": {
+          "package_name": "com.project.calender"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760791277034-boro68aiqbmrlepkv5ald1nfrn5h21d5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBZTNtuHyYd5daru5M2EbKyjP81fzkx5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760791277034-boro68aiqbmrlepkv5ald1nfrn5h21d5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Calendar</string>
+
+    <string name="select_user_type">Kullanıcı Tipi Seçin</string>
+
+    <string-array name="user_types">
+        <item>Normal Kullanıcı</item>
+        <item>Admin</item>
+    </string-array>
+</resources>
