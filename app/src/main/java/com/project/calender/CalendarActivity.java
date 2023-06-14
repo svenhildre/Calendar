@@ -1,11 +1,15 @@
 package com.project.calender;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -18,7 +22,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -28,19 +35,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+// CalendarActivity.java
+
 public class CalendarActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private ListView eventListView;
-    private Button addEventButton;
-
+    private FloatingActionButton addEventButton;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String currentUserID;
-
     private List<Event> eventList;
     private EventListAdapter eventListAdapter;
-
     private Calendar selectedDate;
 
     @Override
@@ -84,6 +90,19 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Event event = eventListAdapter.getItem(position);
+                if (event != null) {
+                    Intent intent = new Intent(CalendarActivity.this, EditEventActivity.class);
+                    intent.putExtra("eventId", event.getEventId());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        loadEvents(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH));
     }
 
     // Seçilen tarihe ait etkinlikleri Firebase Firestore veritabanından yükle
@@ -93,19 +112,21 @@ public class CalendarActivity extends AppCompatActivity {
                 .whereEqualTo("month", month)
                 .whereEqualTo("dayOfMonth", dayOfMonth)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            eventList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Event event = document.toObject(Event.class);
-                                eventList.add(event);
-                            }
-                            eventListAdapter.notifyDataSetChanged();
-                        } else {
-                            Toast.makeText(CalendarActivity.this, "Error loading events", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        eventList.clear();
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Event event = documentSnapshot.toObject(Event.class);
+                            eventList.add(event);
                         }
+                        eventListAdapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CalendarActivity.this, "Error loading events", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -137,4 +158,32 @@ public class CalendarActivity extends AppCompatActivity {
             return convertView;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(CalendarActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadEvents(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH));
+    }
+
 }

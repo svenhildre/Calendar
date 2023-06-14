@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
     private TextView registerTextView;
-
     private FirebaseAuth mAuth;
 
     @Override
@@ -38,6 +37,14 @@ public class LoginActivity extends AppCompatActivity {
 
         // Firebase Authentication örneği oluşturuluyor
         mAuth = FirebaseAuth.getInstance();
+
+        // Kullanıcının oturum açık olup olmadığını kontrol edin
+        if (mAuth.getCurrentUser() != null) {
+            // Kullanıcı oturum açık, CalendarActivity'yi başlatın
+            Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         // Kayıt olma metnine tıklandığında RegisterActivity başlatılır
         registerTextView.setOnClickListener(new View.OnClickListener() {
