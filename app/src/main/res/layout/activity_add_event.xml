@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#151515">
 
 
     <TextView
@@ -15,6 +16,7 @@
         android:text="EVENT"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +32,8 @@
         android:background="@drawable/name_rectangle"
         android:padding="15dp"
         android:hint="Event Name"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,12 +48,14 @@
         android:layout_marginBottom="35dp"
         android:background="@drawable/description_rectangle"
         android:hint="Event Description"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reminder"
+        app:layout_constraintTop_toBottomOf="@+id/reminderTextView"
         app:layout_constraintVertical_bias="0.127" />
 
     <ImageButton
@@ -64,7 +70,8 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cancel" />
+        app:srcCompat="@drawable/clear"
+        app:tint="@color/icon"/>
 
     <ImageButton
         android:id="@+id/saveEventButton"
@@ -77,18 +84,20 @@
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tick" />
+        app:srcCompat="@drawable/ok"
+        app:tint="@color/white"/>
 
     <TextView
-        android:id="@+id/reminder"
+        android:id="@+id/reminderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rectangle"
         android:paddingLeft="13dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:text="Reminders"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -106,6 +115,7 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:text="Time"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -115,22 +125,25 @@
         android:id="@+id/selectedTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:layout_marginEnd="30dp"
+        android:text="--:--"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/eventTimeTextView"
         app:layout_constraintEnd_toEndOf="@+id/eventTimeTextView"
-        app:layout_constraintTop_toTopOf="@+id/eventTimeTextView"
-        app:layout_constraintVertical_bias="0.483" />
+        app:layout_constraintTop_toTopOf="@+id/eventTimeTextView" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/ReminderStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/reminder"
+        android:layout_marginEnd="30dp"
+        android:text="None"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/reminderTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/reminder"
-        app:layout_constraintVertical_bias="0.542" />
+        app:layout_constraintTop_toTopOf="@+id/reminderTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

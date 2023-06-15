@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="floatingButton">#609FFF</color>
     <color name="floatingButtonArea">#434343</color>
+    <color name="icon">#FFFFFF</color>
 </resources>
