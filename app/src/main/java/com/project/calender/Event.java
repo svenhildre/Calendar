@@ -1,5 +1,11 @@
 package com.project.calender;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class Event {
     private String eventId;
     private String name;
@@ -8,6 +14,8 @@ public class Event {
     private int year;
     private int month;
     private int dayOfMonth;
+    private boolean isReminderEnabled;
+    private int selectedReminder;
 
     public Event() {
         // Boş yapıcı yöntem gereklidir
@@ -51,6 +59,22 @@ public class Event {
         return dayOfMonth;
     }
 
+    public boolean isReminderEnabled() {
+        return isReminderEnabled;
+    }
+
+    public void setReminderEnabled(boolean reminderEnabled) {
+        isReminderEnabled = reminderEnabled;
+    }
+
+    public int getSelectedReminder() {
+        return selectedReminder;
+    }
+
+    public void setSelectedReminder(int selectedReminder) {
+        this.selectedReminder = selectedReminder;
+    }
+
     public void setEventId(String eventId) {
         this.eventId = eventId;
     }
@@ -77,5 +101,28 @@ public class Event {
 
     public void setDayOfMonth(int dayOfMonth) {
         this.dayOfMonth = dayOfMonth;
+    }
+
+    public long getEventTimeInMillis() {
+        // Etkinlik zamanını milisaniye cinsinden hesapla
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        Date eventDate = null;
+        try {
+            eventDate = timeFormat.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (eventDate != null) {
+            calendar.set(Calendar.HOUR_OF_DAY, eventDate.getHours());
+            calendar.set(Calendar.MINUTE, eventDate.getMinutes());
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+        }
+
+        return calendar.getTimeInMillis();
     }
 }

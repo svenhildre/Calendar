@@ -1,6 +1,5 @@
 package com.project.calender;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,8 +33,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-// CalendarActivity.java
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -148,6 +145,7 @@ public class CalendarActivity extends AppCompatActivity {
             TextView eventNameTextView = convertView.findViewById(R.id.eventNameTextView);
             TextView eventTimeTextView = convertView.findViewById(R.id.eventTimeTextView);
             TextView eventDescriptionTextView = convertView.findViewById(R.id.eventDescriptionTextView);
+            TextView reminderTextView = convertView.findViewById(R.id.reminderTextView);
 
             Event event = getItem(position);
 
@@ -155,7 +153,27 @@ public class CalendarActivity extends AppCompatActivity {
             eventTimeTextView.setText(event.getTime());
             eventDescriptionTextView.setText(event.getDescription());
 
+            String reminder = getReminderText(event.getSelectedReminder());
+            reminderTextView.setText("Reminder: " + reminder);
+
             return convertView;
+        }
+
+        private String getReminderText(int reminder) {
+            switch (reminder) {
+                case 5:
+                    return "5 minutes";
+                case 10:
+                    return "10 minutes";
+                case 15:
+                    return "15 minutes";
+                case 30:
+                    return "30 minutes";
+                case 60:
+                    return "1 hour";
+                default:
+                    return "None";
+            }
         }
     }
 
@@ -185,5 +203,4 @@ public class CalendarActivity extends AppCompatActivity {
         super.onResume();
         loadEvents(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH));
     }
-
 }
